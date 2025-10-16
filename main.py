@@ -57,7 +57,7 @@ def get_user_id(x_user_id: Optional[str]) -> str:
 # === Routes ===
 @app.get("/health")
 def health():
-    return {"status": "ok", "time": now_iso()}
+    return {"status": "ok"}
 
 @app.post("/api/upload")
 async def upload_document(file: UploadFile = File(...), x_user_id: Optional[str] = Header(default=None, convert_underscores=False)):
