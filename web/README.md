@@ -1,0 +1,1 @@
+Run a simple server: `python -m http.server 5173`.

@@ -1,0 +1,1 @@
+Paste into a new Xcode iOS App project.
