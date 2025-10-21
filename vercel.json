@@ -8,3 +8,10 @@
     }
   ],
   "env": {
+    "VITE_API_BASE": "https://chaosorganizer-production.up.railway.app"
+  },
+  "routes": [
+    { "handle": "filesystem" },
+    { "src": "/.*", "dest": "/index.html" }
+  ]
+}
