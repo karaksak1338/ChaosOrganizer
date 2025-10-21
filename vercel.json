@@ -1,7 +1,5 @@
 {
   "version": 2,
-  "name": "chaos-organizer",
-  "rootDirectory": "web",
   "builds": [
     {
       "src": "web/package.json",
@@ -9,14 +7,4 @@
       "config": { "distDir": "dist" }
     }
   ],
-  "framework": "vite",
   "env": {
-    "VITE_API_BASE": "https://chaosorganizer-production.up.railway.app"
-  },
-  "routes": [
-    {
-      "src": "/(.*)",
-      "dest": "/web/$1"
-    }
-  ]
-}
