@@ -1,63 +1,13 @@
 <!doctype html>
-<html>
-  <head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/><title>ChaosOrganizer Web v0.2</title></head>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ChaosOrganizer — Web</title>
+    <link rel="icon" href="data:,">
+  </head>
   <body>
-    <div id="app"></div>
-    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
-    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
-    <script>
-      const e = React.createElement;
-      const API = (p)=>'http://localhost:8000'+p;
-      const headers = {'X-User-Id':'00000000-0000-0000-0000-000000000001'};
-
-      function App(){
-        const [docs, setDocs] = React.useState([]);
-        const [file, setFile] = React.useState(null);
-        const [q, setQ] = React.useState('');
-        const load = async()=>{
-          const r = await fetch(API('/api/documents'), { headers });
-          setDocs(await r.json());
-        };
-        React.useEffect(()=>{ load(); }, []);
-        const upload = async()=>{
-          const fd = new FormData(); fd.append('file', file);
-          await fetch(API('/api/upload'), { method:'POST', body: fd, headers });
-          setFile(null); await load();
-        };
-        const openDoc = async(id)=>{
-          const r = await fetch(API('/api/signed-url/'+id), { headers });
-          const j = await r.json(); if(j.url) window.open(j.url, '_blank');
-        };
-        const del = async(id)=>{
-          let r = await fetch(API('/api/documents/'+id), { method:'DELETE', headers });
-          const j = await r.json();
-          if(j.confirm && confirm(j.message)){
-            await fetch(API('/api/documents/'+id+'?confirm=true'), { method:'DELETE', headers });
-            await load();
-          }
-        };
-        return e('div', {style:{fontFamily:'system-ui', maxWidth:900, margin:'40px auto'}},
-          e('h1', null, 'ChaosOrganizer (Web v0.2)'),
-          e('div', {style:{display:'flex', gap:8, marginBottom:16}},
-            e('input', {type:'file', onChange:ev=>setFile(ev.target.files[0])}),
-            e('button', {onClick:upload}, 'Upload'),
-            e('input', {placeholder:'Search text...', value:q, onChange:ev=>setQ(ev.target.value)}),
-            e('button', {onClick:load}, 'Search')
-          ),
-          docs.map(d => e('div', {key:d.id, style:{border:'1px solid #ddd', padding:12, borderRadius:8, marginBottom:10}},
-            e('div', {style:{display:'flex', justifyContent:'space-between'}},
-              e('strong', null, d.file_name),
-              e('div', null,
-                e('button', {onClick:()=>openDoc(d.id)}, 'Open'),
-                e('button', {onClick:()=>del(d.id), style:{marginLeft:8}}, 'Delete')
-              )
-            ),
-            e('div', null, `Type: ${d.doc_type || '-'} | Category: ${d.category || '-'} | Supplier: ${d.supplier || '-'}`),
-            e('div', null, `Date: ${d.issue_date || '-'} | Amount: ${d.amount ?? '-'}`),
-          ))
-        );
-      }
-      ReactDOM.createRoot(document.getElementById('app')).render(e(App));
-    </script>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>
