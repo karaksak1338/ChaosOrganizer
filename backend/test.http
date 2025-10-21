@@ -1,0 +1,14 @@
+### Health
+GET http://127.0.0.1:8000/health
+
+### Upload
+POST http://127.0.0.1:8000/api/upload
+Content-Type: multipart/form-data
+
+file=@/Users/sakirkarakaya/Documents/sample.pdf
+
+### List
+GET http://127.0.0.1:8000/api/documents
+
+### Delete
+DELETE http://127.0.0.1:8000/api/documents/<replace_with_doc_id>
